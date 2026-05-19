@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Store Scenario Cards - Interactive</title>
+  <style>
+    :root {
+      --bg: #eef3f4;
+      --surface: #ffffff;
+      --ink: #1f2933;
+      --muted: #5d6b76;
+      --line: #cdd8df;
+      --accent: #0f6b72;
+      --accent-soft: #e6f3f4;
+      --good: #1f7a4d;
+      --good-soft: #e7f5ed;
+      --bad: #b42318;
+      --bad-soft: #fdebea;
+      --warn: #9a5b13;
+      --warn-soft: #fff4df;
+      --shadow: 0 14px 34px rgba(31, 41, 51, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.48;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      border-right: 1px solid var(--line);
+      background: #f8fafb;
+      padding: 22px 18px;
+    }
+
+    main {
+      padding: 28px;
+    }
+
+    .brand {
+      margin-bottom: 18px;
+    }
+
+    .kicker {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 6px 0 8px;
+      font-size: 24px;
+      line-height: 1.14;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .progress-box {
+      margin: 18px 0;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .bar {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dde6ea;
+    }
+
+    .bar-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--accent);
+      transition: width 180ms ease;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-card {
+      width: 100%;
+      min-height: 54px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px 10px;
+      background: var(--surface);
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+    }
+
+    .nav-card:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .nav-card.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .nav-card.done.correct {
+      border-color: rgba(31, 122, 77, 0.45);
+    }
+
+    .nav-card.done.wrong {
+      border-color: rgba(180, 35, 24, 0.45);
+    }
+
+    .nav-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .nav-title {
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      max-width: 980px;
+      margin: 0 auto 16px;
+    }
+
+    .tool-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .ghost-btn {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 7px 11px;
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .ghost-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .scenario {
+      max-width: 980px;
+      margin: 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .scenario-head {
+      padding: 22px 24px 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #f9fcfc 0%, #ffffff 100%);
+    }
+
+    .scenario-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .scenario-title {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .scenario-body {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 20px;
+      padding: 24px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fbfcfc;
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .panel p {
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+
+    .challenge {
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--warn-soft);
+      color: #56370d;
+      font-weight: 700;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 10px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px;
+      background: var(--surface);
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .option:hover {
+      border-color: var(--accent);
+      box-shadow: 0 6px 18px rgba(15, 107, 114, 0.10);
+    }
+
+    .option[disabled] {
+      cursor: default;
+      opacity: 1;
+    }
+
+    .option.selected.correct,
+    .option.correct-answer {
+      border-color: rgba(31, 122, 77, 0.78);
+      background: var(--good-soft);
+    }
+
+    .option.selected.wrong {
+      border-color: rgba(180, 35, 24, 0.78);
+      background: var(--bad-soft);
+    }
+
+    .letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #eaf0f2;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .option-text {
+      font-size: 14px;
+    }
+
+    .feedback {
+      margin-top: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      padding: 14px;
+      background: #f9fbfb;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.good {
+      border-color: rgba(31, 122, 77, 0.5);
+      background: var(--good-soft);
+    }
+
+    .feedback.bad {
+      border-color: rgba(180, 35, 24, 0.5);
+      background: var(--bad-soft);
+    }
+
+    .feedback h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: var(--ink);
+    }
+
+    .feedback p {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .feedback strong {
+      color: var(--ink);
+    }
+
+    .reflection {
+      margin-top: 14px;
+      padding: 13px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      color: #24484c;
+      font-size: 14px;
+    }
+
+    .footer-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 24px 24px;
+    }
+
+    .primary-btn {
+      min-height: 40px;
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 8px 14px;
+      background: var(--accent);
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .primary-btn:hover {
+      background: #0b555b;
+    }
+
+    .primary-btn:disabled {
+      border-color: #a8b6bd;
+      background: #a8b6bd;
+      cursor: default;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+        height: auto;
+      }
+
+      .nav-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      main {
+        padding: 18px;
+      }
+
+      .scenario-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .nav-list {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar,
+      .footer-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .scenario-head,
+      .scenario-body,
+      .footer-actions {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .scenario-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <div class="brand">
+        <div class="kicker">Interactive activity</div>
+        <h1>Scenario Cards cho Admin Store</h1>
+        <p class="intro">Chọn từng thẻ, trả lời A/B/C/D, sau đó xem ngay kết quả và lý do.</p>
+      </div>
+
+      <div class="progress-box">
+        <div class="progress-label">
+          <span>Tiến độ</span>
+          <strong id="progressText">0/12</strong>
+        </div>
+        <div class="bar"><div class="bar-fill" id="progressBar"></div></div>
+      </div>
+
+      <div class="nav-list" id="navList"></div>
+    </aside>
+
+    <main>
+      <div class="toolbar">
+        <div class="tool-group">
+          <span class="status-pill" id="scorePill">Đúng: 0 | Sai: 0</span>
+          <span class="status-pill" id="currentPill">Thẻ 1/12</span>
+        </div>
+        <div class="tool-group">
+          <button class="ghost-btn" id="resetBtn" type="button">Làm lại tất cả</button>
+        </div>
+      </div>
+
+      <article class="scenario" id="scenario"></article>
+    </main>
+  </div>
+
+  <script>
+    const scenarios = [
+      {
+        id: "SC-01",
+        category: "Customer Service",
+        title: "Giá trên kệ khác giá tại quầy thu ngân",
+        role: "Admin Store",
+        situation: "Khách phàn nàn rằng giá trên kệ thấp hơn giá tại quầy thu ngân. Thu ngân gọi bạn hỗ trợ vì phía sau đang có nhiều khách chờ.",
+        challenge: "Bạn nên xử lý bước đầu như thế nào?",
+        options: {
+          A: {
+            text: "Yêu cầu khách thanh toán theo giá trên hệ thống vì hệ thống luôn đúng.",
+            feedback: "Sai. Cách này làm khách cảm thấy bị phủ nhận ngay lập tức. Dù hệ thống có thể đúng, bước đầu vẫn cần xử lý cảm xúc và xác nhận sự việc."
+          },
+          B: {
+            text: "Xin lỗi, xác nhận sản phẩm và chênh lệch giá, nhờ thu ngân giữ tình huống lịch sự, sau đó kiểm tra tem giá/kệ/hệ thống.",
+            feedback: "Đúng. Cách này vừa giảm căng thẳng tại quầy, vừa thu thập dữ kiện để xử lý đúng quy trình."
+          },
+          C: {
+            text: "Yêu cầu khách quay lại kệ để tự chụp hình giá.",
+            feedback: "Sai. Việc này đẩy trách nhiệm về phía khách và dễ làm khách khó chịu hơn. Nhân viên/store nên chủ động xác minh."
+          },
+          D: {
+            text: "Bảo thu ngân bỏ sản phẩm ra khỏi hóa đơn rồi xử lý sau.",
+            feedback: "Chưa tốt. Cách này có thể giải quyết tạm thời nhưng không xử lý nguyên nhân, không rõ quyền lợi khách và dễ bỏ sót lỗi giá."
+          }
+        },
+        correct: "B",
+        best: "Phản xạ tốt là: xin lỗi - xác nhận - kiểm tra - báo cáo/correct theo quy định. Trong tình huống có khách chờ, cần xử lý đồng thời cả trải nghiệm khách và độ chính xác vận hành.",
+        reflection: "Nếu là bạn, câu đầu tiên bạn sẽ nói với khách trong 30 giây đầu là gì?"
+      },
+      {
+        id: "SC-02",
+        category: "Store Operation",
+        title: "Checklist mở cửa chưa hoàn tất",
+        role: "Admin Store",
+        situation: "Còn 10 phút nữa đến giờ mở cửa. Một khu vực chưa hoàn tất opening checklist vì nhân viên phụ trách đến trễ.",
+        challenge: "Hành động tức thời tốt nhất là gì?",
+        options: {
+          A: {
+            text: "Mở cửa như bình thường rồi nhắc nhân viên sau.",
+            feedback: "Sai. Nếu checklist còn hạng mục rủi ro cao, mở cửa mà chưa kiểm tra có thể ảnh hưởng an toàn, dịch vụ hoặc vận hành."
+          },
+          B: {
+            text: "Hoãn mở cửa cho đến khi mọi hạng mục checklist hoàn tất.",
+            feedback: "Không tối ưu. Có thể cần hoãn nếu rủi ro nghiêm trọng, nhưng bước đầu nên phân loại hạng mục nào bắt buộc trước giờ mở cửa và hạng mục nào có thể follow-up."
+          },
+          C: {
+            text: "Xác định hạng mục rủi ro cao chưa kiểm tra, phân công hỗ trợ tạm thời, hoàn tất phần bắt buộc trước giờ mở cửa và ghi nhận để follow-up.",
+            feedback: "Đúng. Cách này ưu tiên rủi ro, vẫn hỗ trợ store mở cửa có kiểm soát, và không bỏ qua trách nhiệm follow-up."
+          },
+          D: {
+            text: "Nhờ bộ phận khác ký checklist thay cho nhân viên phụ trách.",
+            feedback: "Sai. Ký thay làm mất ý nghĩa kiểm soát của checklist và tạo rủi ro trách nhiệm."
+          }
+        },
+        correct: "C",
+        best: "Opening checklist không chỉ là giấy tờ. Nó là công cụ kiểm soát readiness. Hãy tách việc bắt buộc trước mở cửa khỏi phần có thể xử lý sau, đồng thời ghi nhận owner và nguyên nhân.",
+        reflection: "Trong store của bạn, 3 hạng mục mở cửa nào là không thể bỏ qua?"
+      },
+      {
+        id: "SC-03",
+        category: "Communication",
+        title: "Thông tin thay đổi display bị bỏ sót",
+        role: "Admin Store",
+        situation: "HQ gửi hướng dẫn display mới vào tối hôm trước. Sáng nay, một team tại store vẫn làm theo layout cũ và nói rằng họ không nhận được thông tin.",
+        challenge: "Bạn nên xử lý thế nào?",
+        options: {
+          A: {
+            text: "Trách team vì không chịu kiểm tra tin nhắn.",
+            feedback: "Sai. Trách móc không giúp xác định lỗ hổng truyền thông. Vấn đề chính là thông tin đã được hiểu và xác nhận hay chưa."
+          },
+          B: {
+            text: "Forward lại tin nhắn của HQ, không giải thích thêm.",
+            feedback: "Chưa đủ. Gửi lại thông tin không đảm bảo người nhận hiểu đúng thay đổi, deadline và trách nhiệm."
+          },
+          C: {
+            text: "Xác nhận ai đã nhận tin, tóm tắt chính xác điểm thay đổi, làm rõ deadline/owner và tạo cơ chế xác nhận hoàn tất.",
+            feedback: "Đúng. Cách này xử lý cả tình huống hiện tại và cải thiện vòng xác nhận cho các lần sau."
+          },
+          D: {
+            text: "Bỏ qua vì display không quá khẩn cấp.",
+            feedback: "Sai. Display liên quan đến tiêu chuẩn cửa hàng, trải nghiệm khách và sự nhất quán vận hành."
+          }
+        },
+        correct: "C",
+        best: "Trong vận hành, 'đã gửi' khác với 'đã hiểu và đã làm'. Cần có owner, deadline, nội dung thay đổi rõ ràng và bằng chứng xác nhận.",
+        reflection: "Bạn đang dùng cách nào để xác nhận thông tin quan trọng đã thật sự được hiểu?"
+      },
+      {
+        id: "SC-04",
+        category: "Admin Coordination",
+        title: "Approval có nguy cơ trễ deadline",
+        role: "Admin Store",
+        situation: "Một tài liệu cần manager phê duyệt trong hôm nay. Manager đang họp liên tục và chưa phản hồi. Team yêu cầu đang hỏi bạn tình trạng xử lý.",
+        challenge: "Phản hồi chuyên nghiệp nhất là gì?",
+        options: {
+          A: {
+            text: "Chờ manager trả lời vì approval không phải trách nhiệm của bạn.",
+            feedback: "Sai. Bạn không phê duyệt thay, nhưng có trách nhiệm điều phối, nhắc đúng cách và báo trạng thái rõ ràng."
+          },
+          B: {
+            text: "Nói với team yêu cầu rằng manager quá bận.",
+            feedback: "Chưa tốt. Đây là thông tin cảm tính, không giúp team biết bước tiếp theo hoặc rủi ro deadline."
+          },
+          C: {
+            text: "Gửi nhắc ngắn gọn cho manager gồm deadline, quyết định cần phê duyệt, rủi ro nếu trễ và đề xuất bước tiếp theo; cập nhật factual status cho requester.",
+            feedback: "Đúng. Cách này giúp manager ra quyết định nhanh và giữ requester được cập nhật mà không vượt quyền."
+          },
+          D: {
+            text: "Tự phê duyệt để tránh trễ.",
+            feedback: "Sai. Tự phê duyệt vượt quyền có thể tạo rủi ro compliance và trách nhiệm."
+          }
+        },
+        correct: "C",
+        best: "Admin coordination tốt là làm vấn đề trở nên dễ quyết định hơn: deadline, nội dung cần quyết, impact, proposed action. Không im lặng, không đổ lỗi, không vượt quyền.",
+        reflection: "Manager của bạn cần dữ kiện gì để phê duyệt nhanh hơn?"
+      },
+      {
+        id: "SC-05",
+        category: "New Store Opening",
+        title: "Task chuẩn bị khai trương bị chậm",
+        role: "Admin Store",
+        situation: "Trong giai đoạn chuẩn bị khai trương store mới, danh sách xác nhận tham gia training chưa hoàn tất. Ngày khai trương đang gần, còn manpower planning phụ thuộc vào thông tin này.",
+        challenge: "Bạn nên làm gì trước?",
+        options: {
+          A: {
+            text: "Chờ các store phản hồi tự nhiên.",
+            feedback: "Sai. Với launch task, chờ đợi thụ động dễ làm trễ dây chuyền các việc phía sau."
+          },
+          B: {
+            text: "Tạo status list ngắn, xác định tên còn thiếu, liên hệ owner trực tiếp, đặt cut-off time rõ ràng và báo rủi ro sớm.",
+            feedback: "Đúng. Launch cần visibility. Khi thông tin ảnh hưởng manpower/training readiness, phải quản lý trạng thái và escalation sớm."
+          },
+          C: {
+            text: "Gửi email dài giải thích vì sao mọi người cần hợp tác.",
+            feedback: "Chưa tốt. Email dài không thay thế được status list, owner rõ và cut-off time."
+          },
+          D: {
+            text: "Loại ngay những người chưa xác nhận khỏi danh sách.",
+            feedback: "Sai. Việc này có thể gây thiếu manpower/training mà chưa kiểm tra nguyên nhân hoặc owner."
+          }
+        },
+        correct: "B",
+        best: "Trong store opening, thứ nguy hiểm nhất là không thấy trạng thái thật. Status list, owner, deadline và escalation sớm giúp giảm rủi ro trước khi quá muộn.",
+        reflection: "Task launch nào nên có daily status view?"
+      },
+      {
+        id: "SC-06",
+        category: "Complaint Handling",
+        title: "Khách phàn nàn thái độ nhân viên",
+        role: "Admin Store",
+        situation: "Khách nói một nhân viên trả lời thiếu lịch sự. Nhân viên nói khách hiểu lầm và bắt đầu phòng thủ.",
+        challenge: "Cách xử lý bước đầu tốt nhất là gì?",
+        options: {
+          A: {
+            text: "Yêu cầu nhân viên xin lỗi khách ngay trước mặt mọi người.",
+            feedback: "Chưa tốt. Có thể cần xin lỗi, nhưng ép xin lỗi khi chưa xác minh dễ làm nhân viên phản kháng và không giúp hiểu sự việc."
+          },
+          B: {
+            text: "Lắng nghe khách, ghi nhận cảm xúc, tách phần xử lý khách khỏi phần coaching nhân viên, rồi xác minh sự việc bình tĩnh.",
+            feedback: "Đúng. Cách này vừa giữ trải nghiệm khách, vừa đảm bảo công bằng khi đánh giá hành vi nhân viên."
+          },
+          C: {
+            text: "Nói với khách rằng nhân viên đang bận nên có sai sót là bình thường.",
+            feedback: "Sai. Cách này phủ nhận trải nghiệm của khách và làm complaint nặng hơn."
+          },
+          D: {
+            text: "Nhờ một nhân viên khác quyết định ai đúng ai sai.",
+            feedback: "Sai. Người xử lý cần thu thập facts, không đẩy trách nhiệm phán xét cho người không có vai trò."
+          }
+        },
+        correct: "B",
+        best: "Trong complaint, đừng vội kết luận ai đúng. Xử lý cảm xúc khách trước, rồi xác minh facts: ai, nói gì, lúc nào, có witness không, chuẩn service yêu cầu gì.",
+        reflection: "Làm sao để ghi nhận cảm xúc khách mà chưa vội thừa nhận toàn bộ sự việc?"
+      },
+      {
+        id: "SC-07",
+        category: "Safety",
+        title: "Thùng hàng chắn lối đi khách",
+        role: "Admin Store",
+        situation: "Bạn thấy vài thùng hàng đang đặt tạm trên lối đi của khách trong giờ đông. Nhân viên nói sẽ dọn sau khi làm xong task hiện tại.",
+        challenge: "Bạn nên làm gì?",
+        options: {
+          A: {
+            text: "Để nguyên vì task sắp xong.",
+            feedback: "Sai. Rủi ro an toàn không nên chờ đến khi tiện xử lý."
+          },
+          B: {
+            text: "Dọn ngay hoặc phân công dọn ngay, sau đó nhắc team vì sao an toàn lối đi không thể chờ.",
+            feedback: "Đúng. Trước tiên loại bỏ rủi ro, sau đó mới coaching về thói quen vận hành."
+          },
+          C: {
+            text: "Chụp hình và báo cáo sau.",
+            feedback: "Chưa đủ. Báo cáo là cần thiết nếu có vi phạm lặp lại, nhưng rủi ro trước mắt phải được xử lý ngay."
+          },
+          D: {
+            text: "Nhờ khách đi vòng qua khu vực đó.",
+            feedback: "Sai. Không nên chuyển rủi ro và bất tiện sang khách."
+          }
+        },
+        correct: "B",
+        best: "Safety issue cần xử lý theo thứ tự: remove risk first, then coach, then prevent recurrence. Thói quen 'để tạm' thường là nguồn rủi ro vận hành.",
+        reflection: "Có thói quen 'để tạm' nào trong store dễ trở thành rủi ro không?"
+      },
+      {
+        id: "SC-08",
+        category: "Process Compliance",
+        title: "Số lượng nhận hàng bị lệch",
+        role: "Admin Store",
+        situation: "Khi nhận hàng, số lượng thực tế khác với chứng từ giao hàng. Team đang bận và muốn điều chỉnh sau.",
+        challenge: "Bạn nên khuyến nghị gì?",
+        options: {
+          A: {
+            text: "Nhận hàng trước rồi cuối ngày sửa số lượng.",
+            feedback: "Sai. Chỉnh sau dễ mất bằng chứng và tạo rủi ro inventory/finance."
+          },
+          B: {
+            text: "Ghi nhận chênh lệch ngay, giữ bằng chứng, thông báo người phụ trách và làm theo quy trình discrepancy.",
+            feedback: "Đúng. Sai lệch phải được ghi nhận tại thời điểm phát hiện để bảo vệ store và dữ liệu tồn kho."
+          },
+          C: {
+            text: "Nhờ bên giao hàng sửa chứng từ bằng tay.",
+            feedback: "Sai. Sửa chứng từ không đúng quy trình có thể tạo rủi ro compliance."
+          },
+          D: {
+            text: "Bỏ qua nếu giá trị hàng không lớn.",
+            feedback: "Sai. Sai lệch nhỏ nhưng lặp lại có thể gây vấn đề lớn về tồn kho và accountability."
+          }
+        },
+        correct: "B",
+        best: "Receiving cần tính chính xác tại điểm phát hiện. Evidence, owner và timing quan trọng hơn việc xử lý nhanh cho xong.",
+        reflection: "Khi báo discrepancy, bạn cần chuẩn bị bằng chứng gì?"
+      },
+      {
+        id: "SC-09",
+        category: "Team Communication",
+        title: "Nhân viên không nhận được thay đổi lịch",
+        role: "Admin Store",
+        situation: "Một nhân viên bỏ lỡ ca làm đã được đổi trong group chat khi họ đang nghỉ. Supervisor nói rằng thông báo đã gửi rồi.",
+        challenge: "Cải tiến tốt nhất là gì?",
+        options: {
+          A: {
+            text: "Yêu cầu nhân viên kiểm tra tin nhắn thường xuyên hơn.",
+            feedback: "Chưa đủ. Nhân viên cũng có trách nhiệm, nhưng schedule change cần cơ chế xác nhận rõ ràng."
+          },
+          B: {
+            text: "Yêu cầu supervisor không được đổi lịch nữa.",
+            feedback: "Không thực tế. Vận hành có thể cần đổi lịch, vấn đề là đổi thế nào để kiểm soát được."
+          },
+          C: {
+            text: "Làm rõ kênh chính thức để đổi lịch, yêu cầu acknowledgement khi có thay đổi và lưu lịch cuối cùng ở một nguồn duy nhất.",
+            feedback: "Đúng. Schedule cần single source of truth và confirmation, nhất là khi người nhận đang off."
+          },
+          D: {
+            text: "Để mỗi team tự tạo cách riêng.",
+            feedback: "Sai. Mỗi team một cách sẽ làm tăng lỗi và khó kiểm soát."
+          }
+        },
+        correct: "C",
+        best: "Gửi thông báo không bằng xác nhận đã nhận. Với lịch làm việc, cần kênh chính thức, acknowledgement và bản lịch cuối cùng thống nhất.",
+        reflection: "Nguồn lịch chính thức hiện tại là gì? Ai chịu trách nhiệm cập nhật?"
+      },
+      {
+        id: "SC-10",
+        category: "Japanese Working Culture",
+        title: "Báo cáo thiếu dữ kiện",
+        role: "Admin Store",
+        situation: "Bạn báo cáo với quản lý Nhật: 'Hôm nay store có nhiều vấn đề.' Quản lý hỏi lại nhiều câu và có vẻ chưa hài lòng.",
+        challenge: "Báo cáo tốt hơn nên gồm gì?",
+        options: {
+          A: {
+            text: "Thêm nhiều cảm xúc để quản lý hiểu mức độ nghiêm trọng.",
+            feedback: "Sai. Cảm xúc không thay thế được facts. Manager cần thông tin để quyết định."
+          },
+          B: {
+            text: "Chỉ nói kết luận cuối cùng vì quản lý rất bận.",
+            feedback: "Chưa đủ. Kết luận không có facts khiến người nghe khó đánh giá rủi ro và hành động tiếp theo."
+          },
+          C: {
+            text: "Facts: xảy ra chuyện gì, khi nào, ở đâu, ảnh hưởng ra sao, đang xử lý thế nào, rủi ro là gì và cần quyết định/hỗ trợ gì.",
+            feedback: "Đúng. Đây là cấu trúc giúp manager hiểu tình hình và ra quyết định nhanh."
+          },
+          D: {
+            text: "Kể toàn bộ lịch sử của các vấn đề liên quan.",
+            feedback: "Không tối ưu. Quá nhiều lịch sử làm báo cáo dài và mất trọng tâm nếu không gắn với quyết định cần đưa ra."
+          }
+        },
+        correct: "C",
+        best: "Báo cáo tốt theo tinh thần hou-ren-sou là ngắn nhưng đủ dữ kiện: situation, impact, current action, risk, request. Mục tiêu là giúp người nhận quyết định.",
+        reflection: "Bạn có thể biến một vấn đề mơ hồ thành báo cáo 5 dòng như thế nào?"
+      },
+      {
+        id: "SC-11",
+        category: "Training Support",
+        title: "Nhân viên mới không biết hỏi ai",
+        role: "Admin Store",
+        situation: "Một nhân viên mới nói rằng họ đã nhận nhiều tài liệu, nhưng vẫn không biết nên hỏi ai khi gặp câu hỏi vận hành hằng ngày.",
+        challenge: "Phản hồi tốt nhất là gì?",
+        options: {
+          A: {
+            text: "Yêu cầu họ đọc lại tài liệu kỹ hơn.",
+            feedback: "Sai. Tài liệu cần thiết nhưng không đủ. Người mới cần đường hỏi rõ ràng khi gặp tình huống thực tế."
+          },
+          B: {
+            text: "Tạo hoặc xác nhận contact map đơn giản: chủ đề, người hỏi đầu tiên, người backup và rule escalation.",
+            feedback: "Đúng. Contact map giúp người mới giảm lúng túng và tránh hỏi sai người hoặc hỏi quá rộng."
+          },
+          C: {
+            text: "Bảo họ nhắn cho nhiều người cho đến khi có người trả lời.",
+            feedback: "Sai. Cách này gây nhiễu thông tin và làm người mới phụ thuộc vào may rủi."
+          },
+          D: {
+            text: "Báo manager rằng training đã thất bại.",
+            feedback: "Quá nặng. Vấn đề có thể nằm ở learner support, không nhất thiết là toàn bộ training thất bại."
+          }
+        },
+        correct: "B",
+        best: "Onboarding tốt cần tài liệu và support route. Với store operation, biết hỏi ai và escalate khi nào quan trọng gần như biết nội dung quy trình.",
+        reflection: "5 nhóm câu hỏi người mới hay hỏi nhất là gì?"
+      },
+      {
+        id: "SC-12",
+        category: "Improvement Mindset",
+        title: "Lỗi nhỏ lặp lại trong report",
+        role: "Admin Store",
+        situation: "Các lỗi nhỏ cứ lặp lại trong weekly store report: thiếu attachment, sai format ngày, comment chưa rõ.",
+        challenge: "Bạn nên làm gì?",
+        options: {
+          A: {
+            text: "Tự sửa từng report mỗi tuần.",
+            feedback: "Chưa tốt. Tự sửa giúp report sạch trước mắt nhưng không làm giảm lỗi lặp lại."
+          },
+          B: {
+            text: "Gửi reminder rằng mọi người cần cẩn thận hơn.",
+            feedback: "Chưa đủ. Reminder chung thường ít hiệu quả nếu lỗi đến từ template hoặc hướng dẫn chưa rõ."
+          },
+          C: {
+            text: "Nhận diện pattern lỗi, cập nhật template/checklist, đưa một ví dụ đúng và theo dõi lỗi có giảm không.",
+            feedback: "Đúng. Lỗi lặp lại thường là vấn đề hệ thống nhỏ. Sửa template và chuẩn ví dụ sẽ bền hơn nhắc nhở."
+          },
+          D: {
+            text: "Escalate tất cả lỗi lên senior management.",
+            feedback: "Không phù hợp ở bước đầu. Escalation nên dùng khi có rủi ro lớn hoặc đã cải tiến mà vẫn không thay đổi."
+          }
+        },
+        correct: "C",
+        best: "Continuous improvement bắt đầu từ việc biến lỗi lặp lại thành checklist, template hoặc example rõ ràng. Sau đó đo xem lỗi có giảm không.",
+        reflection: "Một lỗi bạn đang sửa thủ công lặp lại có thể biến thành template/checklist không?"
+      }
+    ];
+
+    const state = {
+      current: 0,
+      answers: {}
+    };
+
+    const navList = document.getElementById("navList");
+    const scenarioEl = document.getElementById("scenario");
+    const progressText = document.getElementById("progressText");
+    const progressBar = document.getElementById("progressBar");
+    const scorePill = document.getElementById("scorePill");
+    const currentPill = document.getElementById("currentPill");
+    const resetBtn = document.getElementById("resetBtn");
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function answeredCount() {
+      return Object.keys(state.answers).length;
+    }
+
+    function score() {
+      return Object.entries(state.answers).reduce((acc, [index, answer]) => {
+        const item = scenarios[Number(index)];
+        if (answer === item.correct) acc.correct += 1;
+        else acc.wrong += 1;
+        return acc;
+      }, { correct: 0, wrong: 0 });
+    }
+
+    function renderNav() {
+      navList.innerHTML = scenarios.map((item, index) => {
+        const chosen = state.answers[index];
+        const doneClass = chosen ? `done ${chosen === item.correct ? "correct" : "wrong"}` : "";
+        const activeClass = index === state.current ? "active" : "";
+        const status = chosen ? (chosen === item.correct ? "Đúng" : "Sai") : "Chưa làm";
+        return `
+          <button class="nav-card ${doneClass} ${activeClass}" type="button" data-index="${index}">
+            <span class="nav-meta"><span>${item.id}</span><span>${status}</span></span>
+            <span class="nav-title">${escapeHtml(item.title)}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderProgress() {
+      const done = answeredCount();
+      const currentScore = score();
+      progressText.textContent = `${done}/${scenarios.length}`;
+      progressBar.style.width = `${(done / scenarios.length) * 100}%`;
+      scorePill.textContent = `Đúng: ${currentScore.correct} | Sai: ${currentScore.wrong}`;
+      currentPill.textContent = `Thẻ ${state.current + 1}/${scenarios.length}`;
+    }
+
+    function renderScenario() {
+      const item = scenarios[state.current];
+      const chosen = state.answers[state.current];
+      const isAnswered = Boolean(chosen);
+
+      const optionHtml = Object.entries(item.options).map(([key, option]) => {
+        const isChosen = chosen === key;
+        const isCorrect = item.correct === key;
+        const selectedClass = isChosen ? `selected ${isCorrect ? "correct" : "wrong"}` : "";
+        const correctClass = isAnswered && isCorrect && !isChosen ? "correct-answer" : "";
+        const disabled = isAnswered ? "disabled" : "";
+        return `
+          <button class="option ${selectedClass} ${correctClass}" type="button" data-answer="${key}" ${disabled}>
+            <span class="letter">${key}</span>
+            <span class="option-text">${escapeHtml(option.text)}</span>
+          </button>
+        `;
+      }).join("");
+
+      let feedbackHtml = "";
+      if (isAnswered) {
+        const isCorrect = chosen === item.correct;
+        const chosenOption = item.options[chosen];
+        const correctOption = item.options[item.correct];
+        feedbackHtml = `
+          <section class="feedback show ${isCorrect ? "good" : "bad"}">
+            <h2>${isCorrect ? "Bạn đã chọn đúng" : "Bạn đã chọn chưa đúng"}</h2>
+            <p><strong>Lựa chọn của bạn (${chosen}):</strong> ${escapeHtml(chosenOption.feedback)}</p>
+            ${isCorrect ? "" : `<p><strong>Vì sao lựa chọn ${item.correct} tốt hơn:</strong> ${escapeHtml(correctOption.feedback)}</p>`}
+            <p><strong>Best practice:</strong> ${escapeHtml(item.best)}</p>
+            <div class="reflection"><strong>Câu hỏi suy nghĩ thêm:</strong> ${escapeHtml(item.reflection)}</div>
+          </section>
+        `;
+      }
+
+      scenarioEl.innerHTML = `
+        <header class="scenario-head">
+          <div class="scenario-meta">
+            <span>${item.id} - ${escapeHtml(item.category)}</span>
+            <span>Vai trò: ${escapeHtml(item.role)}</span>
+          </div>
+          <h2 class="scenario-title">${escapeHtml(item.title)}</h2>
+        </header>
+        <div class="scenario-body">
+          <section class="panel">
+            <h2>Tình huống</h2>
+            <p>${escapeHtml(item.situation)}</p>
+            <div class="challenge">${escapeHtml(item.challenge)}</div>
+          </section>
+          <section>
+            <div class="options">${optionHtml}</div>
+            ${feedbackHtml}
+          </section>
+        </div>
+        <div class="footer-actions">
+          <button class="ghost-btn" type="button" id="prevBtn">Thẻ trước</button>
+          <button class="primary-btn" type="button" id="nextBtn">${state.current === scenarios.length - 1 ? "Về thẻ đầu" : "Thẻ tiếp theo"}</button>
+        </div>
+      `;
+    }
+
+    function render() {
+      renderNav();
+      renderProgress();
+      renderScenario();
+    }
+
+    navList.addEventListener("click", (event) => {
+      const button = event.target.closest(".nav-card");
+      if (!button) return;
+      state.current = Number(button.dataset.index);
+      render();
+    });
+
+    scenarioEl.addEventListener("click", (event) => {
+      const option = event.target.closest(".option");
+      if (option && !state.answers[state.current]) {
+        state.answers[state.current] = option.dataset.answer;
+        render();
+        return;
+      }
+
+      if (event.target.id === "prevBtn") {
+        state.current = state.current === 0 ? scenarios.length - 1 : state.current - 1;
+        render();
+        return;
+      }
+
+      if (event.target.id === "nextBtn") {
+        state.current = state.current === scenarios.length - 1 ? 0 : state.current + 1;
+        render();
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      state.answers = {};
+      state.current = 0;
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

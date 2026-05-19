@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Store Scenario Card Deck</title>
+  <style>
+    :root {
+      --ink: #1f2933;
+      --muted: #5f6f7c;
+      --line: #cad4dc;
+      --soft: #f4f7f8;
+      --accent: #0f6b72;
+      --accent-2: #b54708;
+      --green: #236b44;
+      --blue: #245a8d;
+      --paper: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #eef2f4;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.38;
+    }
+
+    .screen-note {
+      max-width: 980px;
+      margin: 24px auto;
+      padding: 16px 20px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .screen-note h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .screen-note p {
+      margin: 6px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 16px auto;
+      padding: 10mm;
+      background: var(--paper);
+      box-shadow: 0 2px 16px rgba(31, 41, 51, 0.14);
+      page-break-after: always;
+    }
+
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kicker {
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    h1, h2, h3, p {
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 8px 0 12px;
+      font-size: 34px;
+      line-height: 1.08;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      color: var(--accent);
+    }
+
+    h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+    }
+
+    p {
+      margin: 0 0 8px;
+      font-size: 12.5px;
+    }
+
+    .lead {
+      max-width: 150mm;
+      font-size: 15px;
+      color: #344450;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .meta-box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: var(--soft);
+    }
+
+    .meta-box strong {
+      display: block;
+      color: var(--ink);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .meta-box span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .method {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .step {
+      border-top: 3px solid var(--accent);
+      padding: 8px 6px 0;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 6mm;
+      height: 267mm;
+    }
+
+    .card {
+      position: relative;
+      border: 1.4px solid var(--line);
+      border-radius: 8px;
+      padding: 6mm;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      break-inside: avoid;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 5px;
+      background: var(--accent);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 5px;
+    }
+
+    .id {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .category {
+      color: var(--muted);
+      font-size: 10px;
+      text-align: right;
+    }
+
+    .title {
+      margin: 0 0 5px;
+      font-size: 15.5px;
+      line-height: 1.16;
+    }
+
+    .label {
+      margin-top: 5px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .body-text {
+      font-size: 11.2px;
+      color: #2f3f4a;
+    }
+
+    .options {
+      margin: 5px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 3px;
+    }
+
+    .options li {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 5px;
+      align-items: start;
+      font-size: 10.2px;
+      color: #283843;
+    }
+
+    .letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 9px;
+      color: var(--accent);
+    }
+
+    .reflect {
+      margin-top: auto;
+      padding-top: 5px;
+      border-top: 1px dashed var(--line);
+      color: var(--muted);
+      font-size: 9.8px;
+    }
+
+    .answer-card {
+      border-left: 4px solid var(--accent);
+      padding: 9px 11px;
+      margin-bottom: 9px;
+      background: #fbfcfc;
+      break-inside: avoid;
+    }
+
+    .answer-card h3 {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .answer {
+      color: var(--green);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .answer-card p {
+      font-size: 11.4px;
+      margin-bottom: 5px;
+    }
+
+    .tag {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .cut-guide {
+      display: none;
+    }
+
+    @media print {
+      body {
+        background: var(--paper);
+      }
+
+      .screen-note {
+        display: none;
+      }
+
+      .page {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="screen-note">
+    <h1>Admin Store Scenario Card Deck</h1>
+    <p>Mở file này bằng trình duyệt và in khổ A4. Khuyến nghị: scale 100%, in một mặt, sau đó cắt thẻ. Phần answer key nằm sau các trang thẻ để Admin Store có thể tự làm trước rồi tự đối chiếu.</p>
+  </div>
+
+  <section class="page cover">
+    <div>
+      <div class="kicker">Scenario-based learning activity</div>
+      <h1>Admin Store Scenario Card Deck</h1>
+      <p class="lead">Bộ thẻ tình huống dùng cho Admin Store tự luyện phản xạ xử lý vấn đề vận hành, giao tiếp, báo cáo và phối hợp store. Bản đầu ưu tiên áp dụng cá nhân trước khi mở rộng thành hoạt động nhóm hoặc lớp training.</p>
+      <div class="meta-grid">
+        <div class="meta-box">
+          <strong>Đối tượng</strong>
+          <span>Admin Store / Store Operation Admin / người hỗ trợ vận hành store</span>
+        </div>
+        <div class="meta-box">
+          <strong>Mục tiêu</strong>
+          <span>Chọn hướng xử lý, hiểu best practice, rút ra hành động nhỏ</span>
+        </div>
+        <div class="meta-box">
+          <strong>Phiên bản</strong>
+          <span>Prototype 01 - 12 scenario cards</span>
+        </div>
+        <div class="meta-box">
+          <strong>Không gọi là</strong>
+          <span>Game cho vui. Đây là activity luyện tình huống vận hành.</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>Cách dùng cá nhân</h2>
+      <div class="method">
+        <div class="step"><strong>1. Chọn thẻ</strong>Chọn 1-2 tình huống mỗi ngày hoặc mỗi tuần.</div>
+        <div class="step"><strong>2. Tự quyết định</strong>Chọn A/B/C/D trước khi xem answer key.</div>
+        <div class="step"><strong>3. Đối chiếu</strong>Đọc best practice và xác định điểm khác với phản xạ ban đầu.</div>
+        <div class="step"><strong>4. Áp dụng</strong>Ghi 1 hành động nhỏ có thể thử trong công việc.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="card-grid">
+      <article class="card">
+        <div class="card-header"><span class="id">SC-01</span><span class="category">Customer Service</span></div>
+        <h2 class="title">Shelf price and cashier price mismatch</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">A customer complains that the shelf price is lower than the cashier price. The cashier calls you because the line is getting longer.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What should you do first?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>Ask the customer to pay the cashier price because the system is always correct.</span></li>
+          <li><span class="letter">B</span><span>Apologize, confirm the item and price difference, ask cashier to pause escalation politely, then check shelf tag/system evidence.</span></li>
+          <li><span class="letter">C</span><span>Ask the customer to go back to the shelf and take a photo.</span></li>
+          <li><span class="letter">D</span><span>Tell the cashier to remove the item from the bill and handle it later.</span></li>
+        </ul>
+        <div class="reflect">Reflection: What exact words would I use in the first 30 seconds?</div>
+      </article>
+
+      <article class="card">
+        <div class="card-header"><span class="id">SC-02</span><span class="category">Store Operation</span></div>
+        <h2 class="title">Opening checklist not completed</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">It is 10 minutes before store opening. One section has not completed the opening checklist because the assigned staff arrived late.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What is the best immediate action?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>Open as usual and remind the staff later.</span></li>
+          <li><span class="letter">B</span><span>Delay store opening until every checklist item is completed.</span></li>
+          <li><span class="letter">C</span><span>Identify the highest-risk unchecked items, assign temporary support, complete must-check items before opening, and record the issue for follow-up.</span></li>
+          <li><span class="letter">D</span><span>Ask another department to sign the checklist on behalf of the staff.</span></li>
+        </ul>
+        <div class="reflect">Reflection: Which opening items are non-negotiable in my store?</div>
+      </article>
+
+      <article class="card">
+        <div class="card-header"><span class="id">SC-03</span><span class="category">Communication</span></div>
+        <h2 class="title">Display change information missed</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">HQ sent an updated display instruction yesterday evening. This morning, one store team is still following the old layout and says they never received the change.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What should you do?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>Blame the team for not checking messages.</span></li>
+          <li><span class="letter">B</span><span>Forward the HQ message again without explanation.</span></li>
+          <li><span class="letter">C</span><span>Confirm who received the message, summarize the exact change, clarify deadline/owner, and create a simple confirmation loop.</span></li>
+          <li><span class="letter">D</span><span>Ignore because display is not urgent.</span></li>
+        </ul>
+        <div class="reflect">Reflection: How do I confirm that important updates were actually understood?</div>
+      </article>
+
+      <article class="card">
+        <div class="card-header"><span class="id">SC-04</span><span class="category">Admin Coordination</span></div>
+        <h2 class="title">Approval deadline at risk</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">A document that needs manager approval is due today. The manager is in meetings and has not replied. The requesting team is asking for status.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What is the most professional response?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>Wait until the manager replies because approval is not your responsibility.</span></li>
+          <li><span class="letter">B</span><span>Tell the requesting team the manager is too busy.</span></li>
+          <li><span class="letter">C</span><span>Send a concise reminder to the manager with deadline, decision needed, risk if delayed, and proposed next step; update the requester with factual status.</span></li>
+          <li><span class="letter">D</span><span>Approve it yourself to avoid delay.</span></li>
+        </ul>
+        <div class="reflect">Reflection: What information does my manager need to decide quickly?</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="card-grid">
+      <article class="card">
+        <div class="card-header"><span class="id">SC-05</span><span class="category">New Store Opening</span></div>
+        <h2 class="title">Task delay before store opening</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">During new store opening preparation, training attendance confirmation is incomplete. Store opening is close, and manpower planning depends on this information.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What should you do first?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>Wait for all stores to reply naturally.</span></li>
+          <li><span class="letter">B</span><span>Create a short status list, identify missing names, contact owners directly, set a clear cut-off time, and report the risk early.</span></li>
+          <li><span class="letter">C</span><span>Send a long email explaining why everyone should cooperate.</span></li>
+          <li><span class="letter">D</span><span>Remove unconfirmed people from the list immediately.</span></li>
+        </ul>
+        <div class="reflect">Reflection: What launch task needs a daily status view?</div>
+      </article>
+
+      <article class="card">
+        <div class="card-header"><span class="id">SC-06</span><span class="category">Complaint Handling</span></div>
+        <h2 class="title">Staff attitude complaint</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">A customer says a staff member answered rudely. The staff member says the customer misunderstood and becomes defensive.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What is the best first handling?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>Ask the staff to apologize immediately in front of everyone.</span></li>
+          <li><span class="letter">B</span><span>Listen to the customer, acknowledge the feeling, separate customer handling from staff coaching, then verify facts calmly.</span></li>
+          <li><span class="letter">C</span><span>Tell the customer that staff are busy and mistakes happen.</span></li>
+          <li><span class="letter">D</span><span>Ask another staff member to decide who is right.</span></li>
+        </ul>
+        <div class="reflect">Reflection: How can I acknowledge emotion without admitting facts I have not checked?</div>
+      </article>
+
+      <article class="card">
+        <div class="card-header"><span class="id">SC-07</span><span class="category">Safety</span></div>
+        <h2 class="title">Blocked aisle discovered</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">You notice cartons temporarily placed in a customer aisle during a busy period. Staff say they will move them after finishing another task.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What should you do?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>Leave them because the task is almost done.</span></li>
+          <li><span class="letter">B</span><span>Move or assign immediate removal, then remind the team why aisle safety cannot wait.</span></li>
+          <li><span class="letter">C</span><span>Take a photo and report later only.</span></li>
+          <li><span class="letter">D</span><span>Ask customers to walk around the cartons.</span></li>
+        </ul>
+        <div class="reflect">Reflection: Which temporary habits in my store can become safety risks?</div>
+      </article>
+
+      <article class="card">
+        <div class="card-header"><span class="id">SC-08</span><span class="category">Process Compliance</span></div>
+        <h2 class="title">Receiving quantity mismatch</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">During goods receiving, the actual quantity is different from the delivery document. The team is busy and wants to adjust later.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What should you advise?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>Accept the delivery first and fix the number after store closing.</span></li>
+          <li><span class="letter">B</span><span>Record the mismatch immediately, keep evidence, inform the responsible person, and follow receiving discrepancy process.</span></li>
+          <li><span class="letter">C</span><span>Ask the delivery person to change the document manually.</span></li>
+          <li><span class="letter">D</span><span>Ignore small differences if the item value is low.</span></li>
+        </ul>
+        <div class="reflect">Reflection: What evidence is required before I report a discrepancy?</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="card-grid">
+      <article class="card">
+        <div class="card-header"><span class="id">SC-09</span><span class="category">Team Communication</span></div>
+        <h2 class="title">Staff did not receive schedule change</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">A staff member misses an updated shift because the schedule was changed in a chat group while they were off. The supervisor says the message was already sent.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What is the best improvement?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>Tell the staff to check messages more often.</span></li>
+          <li><span class="letter">B</span><span>Tell the supervisor not to change schedules anymore.</span></li>
+          <li><span class="letter">C</span><span>Clarify the official schedule-change channel, require acknowledgement for changes, and record the final schedule in one source of truth.</span></li>
+          <li><span class="letter">D</span><span>Let each team create its own method.</span></li>
+        </ul>
+        <div class="reflect">Reflection: Where is the single source of truth for schedule changes?</div>
+      </article>
+
+      <article class="card">
+        <div class="card-header"><span class="id">SC-10</span><span class="category">Japanese Working Culture</span></div>
+        <h2 class="title">Report lacks enough facts</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">You report an operational issue to a Japanese manager: “The store is having many problems today.” The manager asks several follow-up questions and seems unsatisfied.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What should the improved report include?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>More emotion so the manager understands urgency.</span></li>
+          <li><span class="letter">B</span><span>Only the final conclusion, because managers are busy.</span></li>
+          <li><span class="letter">C</span><span>Facts: what happened, when, where, impact, current action, risk, and what decision/support is needed.</span></li>
+          <li><span class="letter">D</span><span>A full history of all related problems.</span></li>
+        </ul>
+        <div class="reflect">Reflection: How can I turn a vague issue into a decision-ready report?</div>
+      </article>
+
+      <article class="card">
+        <div class="card-header"><span class="id">SC-11</span><span class="category">Training Support</span></div>
+        <h2 class="title">New staff does not know who to ask</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">A new staff member says they received many documents but still does not know who to ask for daily operation questions.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What is the best response?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>Tell them to read the documents again.</span></li>
+          <li><span class="letter">B</span><span>Create or confirm a simple contact map: topic, first contact person, backup person, and escalation rule.</span></li>
+          <li><span class="letter">C</span><span>Ask them to message everyone until someone replies.</span></li>
+          <li><span class="letter">D</span><span>Tell their manager that training failed.</span></li>
+        </ul>
+        <div class="reflect">Reflection: What are the top 5 question categories a new staff asks?</div>
+      </article>
+
+      <article class="card">
+        <div class="card-header"><span class="id">SC-12</span><span class="category">Improvement Mindset</span></div>
+        <h2 class="title">Repeated small errors in reports</h2>
+        <div class="label">Role</div>
+        <p class="body-text">Admin Store</p>
+        <div class="label">Situation</div>
+        <p class="body-text">The same minor errors keep appearing in weekly store reports: missing attachment, wrong date format, and unclear comment fields.</p>
+        <div class="label">Challenge</div>
+        <p class="body-text">What should you do?</p>
+        <ul class="options">
+          <li><span class="letter">A</span><span>Correct each report manually every week.</span></li>
+          <li><span class="letter">B</span><span>Send a reminder saying everyone must be more careful.</span></li>
+          <li><span class="letter">C</span><span>Identify the repeated error pattern, update the template/checklist, show one correct example, and track whether errors reduce.</span></li>
+          <li><span class="letter">D</span><span>Escalate all errors to senior management.</span></li>
+        </ul>
+        <div class="reflect">Reflection: What repeated correction can I turn into a checklist or template?</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>Answer Key & Debrief</h2>
+    <div class="answer-card">
+      <h3>SC-01 Shelf price and cashier price mismatch <span class="answer">Answer: B</span></h3>
+      <p>Apologize first, confirm facts, reduce pressure at cashier, check the shelf tag and POS/system information, then follow company rule for correction/reporting. The first behavior matters because the customer needs to feel heard before process correction.</p>
+      <p><span class="tag">Link:</span> Customer service / price accuracy / escalation</p>
+    </div>
+    <div class="answer-card">
+      <h3>SC-02 Opening checklist not completed <span class="answer">Answer: C</span></h3>
+      <p>Separate critical readiness from minor follow-up. Before opening, check safety, customer-facing readiness, cash/POS readiness if relevant, and visible operational risks. Record what was missed and follow up with owner after opening.</p>
+      <p><span class="tag">Link:</span> Opening standard / risk control / ownership</p>
+    </div>
+    <div class="answer-card">
+      <h3>SC-03 Display change information missed <span class="answer">Answer: C</span></h3>
+      <p>The issue is not only the message but the confirmation system. Clarify the change, owner, deadline, and proof of completion. Then improve the communication loop so future updates are acknowledged, not only sent.</p>
+      <p><span class="tag">Link:</span> Information cascade / standardization</p>
+    </div>
+    <div class="answer-card">
+      <h3>SC-04 Approval deadline at risk <span class="answer">Answer: C</span></h3>
+      <p>Escalation should help decision-making. Provide facts, deadline, impact, and proposed action. Do not hide delay, but do not create panic or overstep authority.</p>
+      <p><span class="tag">Link:</span> Approval flow / reporting / accountability</p>
+    </div>
+    <div class="answer-card">
+      <h3>SC-05 Task delay before store opening <span class="answer">Answer: B</span></h3>
+      <p>For launch work, visibility beats assumption. Build a status list, identify gaps, contact owners, set cut-off, and escalate early if the delay affects manpower or training readiness.</p>
+      <p><span class="tag">Link:</span> Store opening / coordination / deadline control</p>
+    </div>
+    <div class="answer-card">
+      <h3>SC-06 Staff attitude complaint <span class="answer">Answer: B</span></h3>
+      <p>Handle the customer emotion first without judging facts too early. Then collect information privately: what happened, what was said, who witnessed it, and whether service standard was followed. Coach behavior after facts are clear.</p>
+      <p><span class="tag">Link:</span> Customer complaint / respectful communication</p>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>Answer Key & Debrief</h2>
+    <div class="answer-card">
+      <h3>SC-07 Blocked aisle discovered <span class="answer">Answer: B</span></h3>
+      <p>Safety risks should be removed immediately. After the area is safe, discuss why temporary placement still creates customer risk and what alternative holding area should be used.</p>
+      <p><span class="tag">Link:</span> Safety / customer readiness</p>
+    </div>
+    <div class="answer-card">
+      <h3>SC-08 Receiving quantity mismatch <span class="answer">Answer: B</span></h3>
+      <p>Quantity mismatch must be recorded at the point of discovery. Evidence and timely reporting protect the store from inventory, finance, and accountability issues.</p>
+      <p><span class="tag">Link:</span> Receiving / inventory accuracy / compliance</p>
+    </div>
+    <div class="answer-card">
+      <h3>SC-09 Staff did not receive schedule change <span class="answer">Answer: C</span></h3>
+      <p>For schedule changes, sending is not the same as confirming. There should be one official source, a clear acknowledgement rule, and a way to handle off-day communication fairly.</p>
+      <p><span class="tag">Link:</span> Manpower / communication control</p>
+    </div>
+    <div class="answer-card">
+      <h3>SC-10 Report lacks enough facts <span class="answer">Answer: C</span></h3>
+      <p>A good report helps the manager decide. Use concise facts and requested action: situation, impact, cause if known, countermeasure, deadline, and support needed.</p>
+      <p><span class="tag">Link:</span> Hou-ren-sou / reporting / decision support</p>
+    </div>
+    <div class="answer-card">
+      <h3>SC-11 New staff does not know who to ask <span class="answer">Answer: B</span></h3>
+      <p>Documents alone do not create support. New staff need a clear question route, especially in store operations where timing matters. A contact map reduces confusion and repeated mistakes.</p>
+      <p><span class="tag">Link:</span> Onboarding / learner support / operation readiness</p>
+    </div>
+    <div class="answer-card">
+      <h3>SC-12 Repeated small errors in reports <span class="answer">Answer: C</span></h3>
+      <p>Repeated small errors are usually system problems, not only attention problems. Improve the template, make the correct example visible, and track whether the fix works.</p>
+      <p><span class="tag">Link:</span> Continuous improvement / standardization</p>
+    </div>
+  </section>
+</body>
+</html>
